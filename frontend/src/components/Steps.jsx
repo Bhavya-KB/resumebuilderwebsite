@@ -11,48 +11,14 @@ import TextField from '@mui/material/TextField';
 const steps = ['Basic Information', 'Contact Details', 'Education Details','Work Experience','Skills and Certificates','Review And Submit'];
 
 
-function Steps() {
+function Steps({setUserInput, userInput}) {
 
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
 
-  const [userInput,setUserInput] = useState({  //usestate is using in this userInput is the value, setUserInput is the function that need to be update
-    profesionlData:{
-      name:"",
-      jobTitle:"",
-      location:"",
-      email:"",
-      phone:"",
-      github:"",
-      linkedIn:"",
-      portfolio:"",
+const [inputSkill,setInputSkill] = useState("")
 
-
-    },
-
-    educationData:{
-      course:"",
-       college:"",
-        university:"",
-         year:"",
-
-
-    },
-
-    experience:{
-       jobRole:"",
-        company:"",
-         jobLocation:"",
-          duration:"",
-
-    },
-
-    skill:[],
-    summary:""
-
-  }
-
-  )
+  
 
   console.log(userInput);
   
@@ -101,6 +67,26 @@ function Steps() {
     setActiveStep(0);
   };
 
+  const addSkill=(inputSkill)=>{
+    console.log("user input skill:" + inputSkill);
+    if(inputSkill){
+      if(userInput.skill.includes(inputSkill)){
+        alert("given  skill already existing ...")
+
+      }
+      else{
+        setUserInput({...userInput,skill:[...userInput.skill,inputSkill]})
+      }
+
+    }
+    
+
+  }
+
+  const removeSkill = (skill)=>{
+    console.log(skill);
+    setUserInput({...userInput,skill:userInput.skill.filter(item=> item!=skill)})
+  }
   const renderStepArrayContent =(stepCount) =>{
     switch (stepCount){
     case 0: return(
@@ -164,8 +150,8 @@ function Steps() {
         <div>
             <h1>Skills</h1>
             <div className='d-flex align-items-center justify-content-center'>
-                 <TextField  sx={{width:"550px"}} id="skill" label="Add Skill" variant="standard" />
-                 <Button variant="outlined">ADD</Button>    
+                 <TextField value={inputSkill} onChange={(e)=>setInputSkill(e.target.value)}   sx={{width:"550px"}} id="skill" label="Add Skill" variant="standard" />
+                 <Button onClick={()=>addSkill(inputSkill)} variant="outlined">ADD</Button>    
 
             </div>
             <div className='mt-3'>
@@ -176,7 +162,7 @@ function Steps() {
             <div className='d-flex flex-wrap gap-4 mt-3'>
                 {
                     SkillsSuggestionArray.map((userSkill)=>(
-                         <Button key={userSkill} variant="outlined">{userSkill}</Button>  
+                         <Button onClick={()=>addSkill(userSkill)} key={userSkill} variant="outlined">{userSkill}</Button>  
 
 
                     )
@@ -188,7 +174,16 @@ function Steps() {
 
             <div className='mt-3'>
                 <h4>Added Skills:</h4>
-                <span className='btn btn-primary me-3'>React<button className='text-light btn'>X</button></span>
+
+                {userInput ?.skill.map((item)=>(<span key={item} className="btn btn-primary me-2">
+                {item}
+                <button
+                  className="btn btn-sm text-light"
+                   onClick={() => removeSkill(item)}
+                >
+                  X
+                </button>
+              </span>))}
             </div>
         </div>
     )

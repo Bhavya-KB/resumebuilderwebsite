@@ -11,7 +11,9 @@ import Edit from './Edit';
 
 
 
-function Preview() {
+function Preview({userInput}) { //{} is given because userInput is an object
+  console.log(userInput);
+  
   return (
     <>
       <Box component="section">

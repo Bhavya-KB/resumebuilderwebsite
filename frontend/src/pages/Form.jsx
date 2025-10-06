@@ -1,8 +1,46 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Steps from '../components/Steps'
 import Preview from '../components/Preview'
 
+
 function Form() {
+   const [userInput,setUserInput] = useState({  //usestate is using in this userInput is the value, setUserInput is the function that need to be update
+      profesionlData:{
+        name:"",
+        jobTitle:"",
+        location:"",
+        email:"",
+        phone:"",
+        github:"",
+        linkedIn:"",
+        portfolio:"",
+  
+  
+      },
+  
+      educationData:{
+        course:"",
+         college:"",
+          university:"",
+           year:"",
+  
+  
+      },
+  
+      experience:{
+         jobRole:"",
+          company:"",
+           jobLocation:"",
+            duration:"",
+  
+      },
+  
+      skill:[],
+      summary:""
+  
+    }
+  
+    )
   return (
     <>
    <div className="container-fluid">
@@ -10,14 +48,14 @@ function Form() {
 
         {/*STEPS  */}
         <div className="col-6 ">
-            <Steps/>
+            <Steps setUserInput={setUserInput} userInput={userInput}/>
 
         </div>
 
   {/*PREVIEW  */}
 
         <div className="col-6 ">
-            <Preview/>
+            <Preview userInput={userInput}/>
 
         </div>
 
